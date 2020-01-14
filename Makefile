@@ -5,7 +5,7 @@ fmt:
 	poetry run black $(PWD)
 
 test:
-	poetry run pytest --black --cov=dashi --isort --mypy
+	poetry run pytest --black --cov=dashi --flake8 --isort --mypy
 
 build:
 	poetry build

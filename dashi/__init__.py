@@ -1,4 +1,3 @@
-import tornado
 from tornado.web import Application, RequestHandler
 
 from .endpoints.dashboards import DashboardsHandler
