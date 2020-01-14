@@ -1,4 +1,4 @@
-all: fmt test
+all: fmt test build
 
 fmt:
 	poetry run isort -y
@@ -7,4 +7,8 @@ fmt:
 test:
 	poetry run pytest --black --cov=dashi --isort --mypy
 
-.PHONY: all fmt test
+build:
+	poetry build
+	docker-compose build
+
+.PHONY: all fmt test build
