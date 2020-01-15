@@ -2,14 +2,17 @@ FROM ubuntu:18.04
 
 RUN apt-get update && \
     apt-get install -y \
-        software-properties-common
+        software-properties-common \
+        libssl-dev \
+        libmysqlclient-dev
 
 RUN add-apt-repository ppa:deadsnakes/ppa
 
 RUN apt-get update && \
     apt-get install -y \
         python3.8 \
-	python3-pip
+        python3.8-dev \
+        python3-pip
 
 RUN mkdir -p /opt/dashi
 COPY . /opt/dashi

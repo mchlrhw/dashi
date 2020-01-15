@@ -7,6 +7,8 @@ authors = ["mchlrhw <4028654+mchlrhw@users.noreply.github.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 tornado = "^6.0.3"
+mysqlclient = "^1.4.6"
+tornado-sqlalchemy = "^0.7.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3.2"
