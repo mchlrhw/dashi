@@ -11,7 +11,15 @@ class DashboardsHandler(SessionMixin, RequestHandler):
         with self.make_session() as session:
             dashboards = await as_future(session.query(Dashboard).all)
 
-        serializable = [d.__dict__ for d in dashboards]
-        payload = json.dumps(serializable)
+            serializable = []
+            for row in dashboards:
+                dashboard = {
+                    "id": row.id,
+                    "createdAt": row.createdAt.isoformat(),
+                    "updatedAt": row.updatedAt.isoformat(),
+                    "title": row.title,
+                }
+                serializable.append(dashboard)
 
+        payload = json.dumps(serializable)
         self.write(payload)

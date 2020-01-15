@@ -12,15 +12,16 @@ async def test_dashboards(http_client, base_url):
     assert resp.code == 200
 
     payload = json.loads(resp.body)
+    first = payload[0]
 
-    assert "id" in payload
-    assert payload["id"] > 0
+    assert "id" in first
+    assert first["id"] > 0
 
-    assert "createdAt" in payload
-    assert payload["createdAt"]
+    assert "createdAt" in first
+    assert first["createdAt"]
 
-    assert "updatedAt" in payload
-    assert payload["updatedAt"]
+    assert "updatedAt" in first
+    assert first["updatedAt"]
 
-    assert "title" in payload
-    assert payload["title"]
+    assert "title" in first
+    assert first["title"]
