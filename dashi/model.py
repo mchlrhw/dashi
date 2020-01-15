@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from sqlalchemy import BigInteger, Column, DateTime
+from sqlalchemy import BigInteger, Column, DateTime, String
 from sqlalchemy.sql.functions import now
 from tornado_sqlalchemy import SQLAlchemy
 
@@ -17,3 +17,4 @@ class Dashboard(Model):
     id = Column(BigInteger, primary_key=True)
     createdAt = Column(DateTime, nullable=False, default=now())
     updatedAt = Column(DateTime, nullable=False, default=now(), onupdate=now())
+    title = Column(String, nullable=False)
