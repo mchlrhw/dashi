@@ -2,6 +2,7 @@ import json
 from urllib.parse import urljoin
 
 import pytest
+from tornado.httpclient import HTTPClientError
 
 
 @pytest.mark.gen_test
@@ -25,3 +26,35 @@ async def test_dashboards(http_client, base_url):
 
     assert "title" in first
     assert first["title"]
+
+
+@pytest.mark.gen_test
+async def test_dashboard(http_client, base_url):
+    dashboard_url = urljoin(base_url, "/dashboards/1")
+
+    resp = await http_client.fetch(dashboard_url)
+    assert resp.code == 200
+
+    payload = json.loads(resp.body)
+
+    assert "id" in payload
+    assert payload["id"] > 0
+
+    assert "createdAt" in payload
+    assert payload["createdAt"]
+
+    assert "updatedAt" in payload
+    assert payload["updatedAt"]
+
+    assert "title" in payload
+    assert payload["title"]
+
+
+@pytest.mark.gen_test
+async def test_missing_dashboard(http_client, base_url):
+    dashboard_url = urljoin(base_url, "/dashboards/5")
+
+    with pytest.raises(HTTPClientError) as e:
+        await http_client.fetch(dashboard_url)
+
+    assert e.value.code == 404
