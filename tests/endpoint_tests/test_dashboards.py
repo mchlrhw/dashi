@@ -2,7 +2,7 @@ import json
 from urllib.parse import urljoin
 
 import pytest
-from tornado.httpclient import HTTPClientError
+from tornado.httpclient import HTTPClientError, HTTPRequest
 
 
 @pytest.mark.gen_test
@@ -52,9 +52,22 @@ async def test_dashboard(http_client, base_url):
 
 @pytest.mark.gen_test
 async def test_missing_dashboard(http_client, base_url):
-    dashboard_url = urljoin(base_url, "/dashboards/5")
+    dashboard_url = urljoin(base_url, "/dashboards/0")
 
     with pytest.raises(HTTPClientError) as e:
         await http_client.fetch(dashboard_url)
 
     assert e.value.code == 404
+
+
+@pytest.mark.gen_test
+async def test_create_dashboard(http_client, base_url):
+    dashboard_url = urljoin(base_url, "/dashboards")
+    payload = {"title": "Test table 5"}
+    body = json.dumps(payload)
+    request = HTTPRequest(dashboard_url, method="POST", body=body)
+
+    resp = await http_client.fetch(request)
+    payload = json.loads(resp.body)
+
+    assert payload["id"]

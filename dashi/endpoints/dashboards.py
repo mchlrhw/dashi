@@ -25,6 +25,21 @@ class DashboardsHandler(SessionMixin, RequestHandler):
         payload = json.dumps(serializable)
         self.write(payload)
 
+    async def post(self):
+        payload = json.loads(self.request.body)
+        title = payload["title"]
+
+        with self.make_session() as session:
+            row = Dashboard(title=title)
+            await as_future(lambda: session.add(row))
+            session.flush()
+            session.refresh(row)
+            row_id = row.id
+
+        response = {"id": row_id}
+        resp_payload = json.dumps(response)
+        self.write(resp_payload)
+
 
 class DashboardHandler(SessionMixin, RequestHandler):
     async def get(self, dash_id):
