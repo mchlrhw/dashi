@@ -11,4 +11,10 @@ build:
 	poetry build
 	docker-compose build
 
-.PHONY: all fmt test build
+up:
+	docker-compose up
+
+down:
+	docker-compose down
+
+.PHONY: all fmt test build up down
