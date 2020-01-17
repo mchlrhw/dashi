@@ -29,6 +29,11 @@ line_length = 88
 [tool.coverage.run]
 branch = true
 
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+sort = "Miss"
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
